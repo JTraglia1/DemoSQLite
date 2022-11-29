@@ -74,7 +74,8 @@ public class AddEmployeeDialog extends DialogFragment {
             }
         });
 
-        DatePickerDialog.OnDateSetListener  date =  new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener  date =  new DatePickerDialog.OnDateSetListener()
+        {
 
             @Override
             public void onDateSet(DatePicker view, int year,
