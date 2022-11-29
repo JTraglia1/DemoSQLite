@@ -31,6 +31,7 @@ public class AddEmployeeDialog extends DialogFragment {
 
     public AddEmployeeDialog()
     {
+
     }
 
     @Override
@@ -54,7 +55,8 @@ public class AddEmployeeDialog extends DialogFragment {
 
         // on clicking ok on the calender dialog
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
 
@@ -62,12 +64,13 @@ public class AddEmployeeDialog extends DialogFragment {
             }
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
+                saveEmployee();
                 dismiss();
-
             }
         });
 
@@ -99,10 +102,12 @@ public class AddEmployeeDialog extends DialogFragment {
             }
         });
 
+        //create the dbhelper
+        dbHelper = new DBHelper(getContext());
+
         builder.setView(dialogView).setMessage("Add New Employee");
         return builder.create();
     }
-
 
 
     private void saveEmployee()
@@ -122,9 +127,7 @@ public class AddEmployeeDialog extends DialogFragment {
         {
             ArrayList<Employee> emps = new ArrayList<Employee>();
 
-           // employeeListAdapter.setEmployees(emps);
-           // employeeListAdapter.notifyDataSetChanged();
-           // employeeListAdapter.notifyItemRangeChanged(0, emps.size());
+            dbHelper.saveEmployee(name, desig, calInMS);
 
             toastString = "Employee Added!";
         }
@@ -132,8 +135,6 @@ public class AddEmployeeDialog extends DialogFragment {
         Toast t = Toast.makeText(getContext(), toastString, Toast.LENGTH_SHORT);
         t.show();
     }
-
-
 
     private  String  getFormattedDate(long dobInMilis){
 

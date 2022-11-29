@@ -21,7 +21,6 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
 
     public EmployeeListAdapter(Context context)
     {
-
         this.context = context;
     }
     @NonNull

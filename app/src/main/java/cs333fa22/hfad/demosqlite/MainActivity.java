@@ -15,13 +15,14 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private EmployeeListAdapter empListAdapter;
-
-
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHelper = new DBHelper(this);
 
         FloatingActionButton fabAdd = findViewById(R.id.fab);
         empListAdapter = setUpRecyclerView();

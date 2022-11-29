@@ -1,23 +1,23 @@
 package cs333fa22.hfad.demosqlite;
 
 public class Employee {
-    private String id;
+    private long id;
     private String name;
     private String designation;
     private long dob;
 
-    public Employee(String id, String name, long dob, String designation) {
+    public Employee(long id, String name, long dob, String designation) {
         this.id = id;
         this.name = name;
         this.dob = dob;
         this.designation = designation;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
