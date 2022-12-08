@@ -21,9 +21,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class UpdateEmployeeDialog  extends DialogFragment
+public class UpdateEmployeeDialog extends DialogFragment
 {
-
     private Calendar myCalendar = Calendar.getInstance();
     private EditText etvDesignation;
     private EditText etvName;
@@ -32,11 +31,13 @@ public class UpdateEmployeeDialog  extends DialogFragment
     private Button btnCancel;
     private DBHelper dbHelper;
     private Employee employeeToShow;
+    private EmployeeListAdapter employeeListAdapter;
 
 
-    public UpdateEmployeeDialog(Employee employee)
+    public UpdateEmployeeDialog(Employee employeeToShow, EmployeeListAdapter employeeListAdapter)
     {
-        this.employeeToShow = employee;
+        this.employeeToShow = employeeToShow;
+        this.employeeListAdapter = employeeListAdapter;
     }
 
     @Override
@@ -44,6 +45,7 @@ public class UpdateEmployeeDialog  extends DialogFragment
 
 
         super.onCreate(savedInstanceState);
+        dbHelper = new DBHelper(getContext());
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(getActivity());
@@ -74,8 +76,8 @@ public class UpdateEmployeeDialog  extends DialogFragment
             @Override
             public void onClick(View view) {
 
+                updateEmployeeInfo();
                 dismiss();
-
             }
         });
 
@@ -109,6 +111,8 @@ public class UpdateEmployeeDialog  extends DialogFragment
             }
         });
 
+        dbHelper = new DBHelper(getContext());
+
         builder.setView(dialogView).setMessage("Update Employee");
         return builder.create();
     }
@@ -129,8 +133,19 @@ public class UpdateEmployeeDialog  extends DialogFragment
         }
         else  //Update info for employee
         {
-            toastString = "Employee updated.";
+            employeeToShow.setName(name);
+            employeeToShow.setDesignation(desig);
+            employeeToShow.setDob(calInMS);
 
+            dbHelper.updateEmployee(employeeToShow);
+
+            ArrayList<Employee> allEmps = dbHelper.fetchAllEmployees();
+
+            employeeListAdapter.setEmployees(allEmps);
+            employeeListAdapter.notifyDataSetChanged();
+            employeeListAdapter.notifyItemChanged(0, allEmps.size());
+
+            toastString = "Employee updated.";
         }
 
         Toast t = Toast.makeText(getContext(), toastString, Toast.LENGTH_SHORT);
@@ -138,8 +153,8 @@ public class UpdateEmployeeDialog  extends DialogFragment
     }
 
 
-    private  String  getFormattedDate(long dobInMilis){
-
+    private  String  getFormattedDate(long dobInMilis)
+    {
         SimpleDateFormat formatter = new  SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault());
 
         Date dobDate =   new Date(dobInMilis);

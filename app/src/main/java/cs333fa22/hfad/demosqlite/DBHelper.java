@@ -90,8 +90,35 @@ public class DBHelper extends SQLiteOpenHelper {
         return allEmps;
     }
 
-    public void updateEmployee()
+    public void updateEmployee(Employee employee)
     {
+        /*
+        UPDATE employee
+        SET name = 'Ann Houckk',
+	        designation = 'President Extraordinaire',
+	        dob = 1667477869517
+        WHERE _id = 1;
+         */
 
+        String updateString = String.format("UPDATE %s \n" +
+                                            "SET %s = '%s',\n" +
+                                            "    %s = '%s',\n" +
+                                            "    %s = %d \n" +
+                                            "WHERE %s = %d;",
+                DBContract.EmployeeEntry.TABLE_NAME,
+                DBContract.EmployeeEntry.COLUMN_NAME,
+                employee.getName(),
+                DBContract.EmployeeEntry.COLUMN_DESIGNATION,
+                employee.getDesignation(),
+                DBContract.EmployeeEntry.COLUMN_DOB,
+                employee.getDob(),
+                DBContract.EmployeeEntry.COLUMN_ID,
+                employee.getId());
+
+        System.out.println("UPDATING" + updateString);
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL(updateString);
+        database.close();
     }
 }

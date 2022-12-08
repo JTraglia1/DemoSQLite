@@ -28,16 +28,16 @@ public class AddEmployeeDialog extends DialogFragment {
     private Button btnSave;
     private Button btnCancel;
     private DBHelper dbHelper;
+    private EmployeeListAdapter employeeListAdapter;
 
-    public AddEmployeeDialog()
+    public AddEmployeeDialog(EmployeeListAdapter employeeListAdapter)
     {
-
+        this.employeeListAdapter = employeeListAdapter;
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         AlertDialog.Builder builder =
@@ -126,9 +126,14 @@ public class AddEmployeeDialog extends DialogFragment {
         }
         else
         {
-            ArrayList<Employee> emps = new ArrayList<Employee>();
-
             dbHelper.saveEmployee(name, desig, calInMS);
+
+            //Refresh the UI
+            ArrayList<Employee> allEmps = dbHelper.fetchAllEmployees();
+
+            employeeListAdapter.setEmployees(allEmps);
+            employeeListAdapter.notifyDataSetChanged();
+            employeeListAdapter.notifyItemRangeChanged(0, allEmps.size());
 
             toastString = "Employee Added!";
         }

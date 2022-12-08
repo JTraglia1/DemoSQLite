@@ -80,7 +80,7 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         @Override
         public void onClick(View view) {
 
-            UpdateEmployeeDialog dialog = new UpdateEmployeeDialog(currentEmp);
+            UpdateEmployeeDialog dialog = new UpdateEmployeeDialog(currentEmp, EmployeeListAdapter.this);
             FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
             dialog.show(fm, "");
 

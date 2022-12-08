@@ -6,7 +6,8 @@ public class Employee {
     private String designation;
     private long dob;
 
-    public Employee(long id, String name, long dob, String designation) {
+    public Employee(long id, String name, long dob, String designation)
+    {
         this.id = id;
         this.name = name;
         this.dob = dob;
